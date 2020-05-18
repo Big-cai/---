@@ -13,6 +13,12 @@
     <script src="./libs/jquery-1.12.4.min.js"></script>
     <!-- 引入模板引擎js文件 -->
     <script src="./libs/template-web.js"></script>
+    <!-- 引入分页插件 -->
+    <script src="./libs/jquery.twbsPagination.js"></script>
+    <!-- 引入http.js文件 -->
+    <script src="./js/http.js"></script>
+    <!-- 引入当前页面js文件 -->
+    <script src="./js/article_list.js"></script>
 </head>
 
 <body>
@@ -24,18 +30,15 @@
             <div class="row opt_btns">
                 <div class="col-xs-6">
                     <form class="form-inline">
-                        <select id="selCategory" name="" class="form-control input-sm">
-                            <option value="">所有分类</option>
-                            <option>未分类</option>
-                            <option>奇趣事</option>
-                            <option>会生活</option>
-                            <option>爱旅行</option>
+                        <select id="selCategory" name="type" class="form-control input-sm">
+
                         </select>
-                        <select id="selStatus" name="" class="form-control input-sm">
+                        <select id="selStatus" name="state" class="form-control input-sm">
                             <option value="">所有状态</option>
                             <option value="草稿">草稿</option>
                             <option value="已发布">已发布</option>
                         </select>
+                        <input type="text" id="key" name="key">
                         <button id="btnSearch" class="btn btn-default btn-sm">筛选</button>
                     </form>
                 </div>
@@ -46,6 +49,7 @@
             <table class="table table-striped table-bordered table-hover mp20">
                 <thead>
                     <tr>
+                        <th class="text-center">序号</th>
                         <th>标题</th>
                         <th>作者</th>
                         <th>分类</th>
@@ -55,23 +59,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>王积千造统最头</td>
-                        <td>杰克</td>
-                        <td>奇趣事</td>
-                        <td class="text-center">2017-06-08 07:08:46</td>
-                        <td class="text-center">已发布</td>
-                        <td class="text-center">
-                            <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
-                            <a href="javascript:void(0);" class="btn btn-danger btn-xs delete">删除</a>
-                        </td>
-                    </tr>
+
                 </tbody>
             </table>
+            <!-- 分页布局 -->
             <div class="row text-center">
+                <ul id="pagination-demo" class="pagination-sm"></ul>
             </div>
         </div>
     </div>
+    <!-- 文章分类的模块 -->
+    <script type="text/template" id="categoryList">
+        <option value="">所有分类</option>
+        {{each data value index}}
+        <option value="{{value.id}}">{{value.name}}</option>
+        {{/each}}
+    </script>
+
+    <!-- 文章列表的模块 -->
+    <script type="text/template" id="articleList">
+        {{each data value index}}
+        <tr>
+            <td class='text-center'>{{index+1}}</td>
+            <td>{{value.title}}</td>
+            <td>{{value.author}}</td>
+            <td>{{value.category}}</td>
+            <td class="text-center">{{value.date}}</td>
+            <td class="text-center">
+                <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
+                <a href="javascript:void(0);" class="btn btn-danger btn-xs delete"> 删除</a>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
 </body>
 
 </html>
